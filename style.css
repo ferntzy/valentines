@@ -1,0 +1,785 @@
+ /* Import romantic fonts */
+      @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap");
+
+      /* CSS Variables for easy customization */
+      :root {
+        --blush-pink: #ffd1dc;
+        --soft-cream: #fff8f0;
+        --muted-lavender: #e6e6fa;
+        --sage-green: #b2c9ab;
+        --deep-rose: #d8a7b1;
+        --text-dark: #5a4a4a;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Crimson Text", serif;
+        background: linear-gradient(
+          135deg,
+          var(--soft-cream) 0%,
+          var(--blush-pink) 50%,
+          var(--muted-lavender) 100%
+        );
+        color: var(--text-dark);
+        overflow-x: hidden;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      /* Paper texture overlay */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image:
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.05) 2px,
+            rgba(255, 255, 255, 0.05) 4px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.05) 2px,
+            rgba(255, 255, 255, 0.05) 4px
+          );
+        opacity: 0.3;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Main container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 20px;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Header */
+      .header {
+        text-align: center;
+        margin-bottom: 100px;
+        animation: fadeInDown 1.5s ease;
+      }
+
+      .header h1 {
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        color: var(--deep-rose);
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .header p {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        font-style: italic;
+        color: var(--text-dark);
+        opacity: 0.8;
+      }
+
+      /* Photo card container */
+      .photo-section {
+        margin: 150px 0;
+        position: relative;
+      }
+
+      /* Individual photo card */
+       .photo-card {
+            width: clamp(280px, 40vw, 400px);
+            height: clamp(350px, 50vw, 500px);
+            perspective: 1000px;
+            margin: 0 auto 80px;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+      /* Random tilts for cards */
+      .photo-card:nth-child(odd) {
+        transform: rotate(-3deg);
+        margin-left: 10%;
+      }
+
+      .photo-card:nth-child(even) {
+        transform: rotate(4deg);
+        margin-right: 10%;
+      }
+
+      .photo-card:hover {
+        transform: rotate(0deg) scale(1.02);
+      }
+
+      /* Card inner (for flip) */
+      .photo-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
+
+      .photo-card.flipped .photo-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      /* Front and back of card */
+      .photo-front,
+      .photo-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        background: white;
+        padding: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        border-radius: 3px;
+      }
+
+      /* Front of card (face down) */
+      .photo-front {
+        background: linear-gradient(
+          135deg,
+          var(--blush-pink),
+          var(--muted-lavender)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .photo-front::after {
+        content: " Click";
+        font-family: "Dancing Script", cursive;
+        font-size: 1.8rem;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Back of card (revealed photo) */
+      .photo-back {
+        transform: rotateY(180deg);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .photo-img {
+        flex: 1;
+        background: #f0f0f0;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+
+      .photo-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .photo-caption {
+        font-family: "Dancing Script", cursive;
+        font-size: 1.3rem;
+        text-align: center;
+        color: var(--text-dark);
+        padding: 10px;
+        min-height: 50px;
+      }
+
+      /* Message box */
+   .message-box {
+    margin: 40px 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 32px 5.5vw;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 182, 193, 0.35);
+    border-radius: 0;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.message-box.visible {
+    overflow: hidden;
+    opacity: 1;
+    display: block;
+    transform: translateY(0);
+}
+
+.message-box p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* Typewriter effect */
+.typewriter {
+    overflow: hidden;
+    white-space: normal;      /* <-- allow wrap */
+    display: inline-block;
+    border-right: 3px solid var(--deep-rose);
+    animation: blink 0.7s step-end infinite;
+    word-break: break-word;
+}
+
+
+      .typewriter-container {
+        flex: 1; /* take available space */
+        overflow: hidden; /* safety net */
+        margin-top: 1rem;
+      }
+
+    .typewriter-text {                  /* if you use this class elsewhere */
+    white-space: pre-wrap;          /* respect line breaks but wrap long lines */
+    word-wrap: break-word;          /* break very long words if needed */
+    overflow-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.45;
+    font-size: 1.05rem;
+    color: #000000;
+}
+
+      @keyframes blink {
+        50% {
+          border-color: transparent;
+        }
+      }
+
+      /* Floating hearts */
+      .floating-hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 3;
+        overflow: hidden;
+      }
+
+      .heart {
+        position: absolute;
+        font-size: 20px;
+        opacity: 0.6;
+        animation: floatUp 8s linear infinite;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.6;
+        }
+        90% {
+          opacity: 0.6;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Decorative flowers between sections */
+      .flower-divider {
+        text-align: center;
+        margin: 80px 0;
+        font-size: 3rem;
+        opacity: 0.4;
+      }
+
+     :root {
+        --sage-green: #8fbc8f;
+      }
+      
+      /* Bouquet container */
+      .bouquet {
+        position: relative;
+        width: 400px;
+        height: 500px;
+        margin: 0 auto;
+        animation: gentleSway 3s ease-in-out infinite;
+      }
+
+      @keyframes gentleSway {
+        0%, 100% { transform: rotate(-1deg); }
+        50% { transform: rotate(1deg); }
+      }
+
+      /* Lily */
+      .lily {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+      }
+
+      .lily-bloom {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .lily-petal {
+        position: absolute;
+        width: 35px;
+        height: 70px;
+        background: linear-gradient(to top, #fffaf0 0%, #ffffff 70%, #fff 100%);
+        border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+        top: 15px;
+        left: 32px;
+        box-shadow: inset -2px 0 8px rgba(255, 182, 193, 0.2);
+      }
+
+      .lily-petal:nth-child(1) { transform: rotate(0deg) translateY(-15px); }
+      .lily-petal:nth-child(2) { transform: rotate(60deg) translateY(-15px); }
+      .lily-petal:nth-child(3) { transform: rotate(120deg) translateY(-15px); }
+      .lily-petal:nth-child(4) { transform: rotate(180deg) translateY(-15px); }
+      .lily-petal:nth-child(5) { transform: rotate(240deg) translateY(-15px); }
+      .lily-petal:nth-child(6) { transform: rotate(300deg) translateY(-15px); }
+
+      .lily-center {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: radial-gradient(circle, #ffd700, #ffb347);
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+      }
+
+      .lily-center::before {
+        content: '';
+        position: absolute;
+        width: 3px;
+        height: 20px;
+        background: #ffd700;
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      /* Peony */
+      .peony {
+        position: absolute;
+        width: 110px;
+        height: 110px;
+      }
+
+      .peony-bloom {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .peony-layer {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+      }
+
+      .peony-petal {
+        position: absolute;
+        width: 45px;
+        height: 45px;
+        background: radial-gradient(circle at 35% 35%, #ffccd5, #ff69b4);
+        border-radius: 80% 0% 55% 50% / 55% 0% 80% 50%;
+        top: 32px;
+        left: 32px;
+      }
+
+      /* First layer - outer petals */
+      .peony-layer:nth-child(1) .peony-petal:nth-child(1) {
+        transform: rotate(0deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(1) .peony-petal:nth-child(2) {
+        transform: rotate(45deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(1) .peony-petal:nth-child(3) {
+        transform: rotate(90deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(1) .peony-petal:nth-child(4) {
+        transform: rotate(135deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(1) .peony-petal:nth-child(5) {
+        transform: rotate(180deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(1) .peony-petal:nth-child(6) {
+        transform: rotate(225deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(1) .peony-petal:nth-child(7) {
+        transform: rotate(270deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(1) .peony-petal:nth-child(8) {
+        transform: rotate(315deg) translate(20px, 0);
+      }
+
+      /* Second layer - middle petals */
+      .peony-layer:nth-child(2) {
+        transform: scale(0.65);
+      }
+
+      .peony-layer:nth-child(2) .peony-petal {
+        background: radial-gradient(circle at 35% 35%, #ffd6e0, #ff85a2);
+      }
+
+      .peony-layer:nth-child(2) .peony-petal:nth-child(1) {
+        transform: rotate(22deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(2) .peony-petal:nth-child(2) {
+        transform: rotate(67deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(2) .peony-petal:nth-child(3) {
+        transform: rotate(112deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(2) .peony-petal:nth-child(4) {
+        transform: rotate(157deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(2) .peony-petal:nth-child(5) {
+        transform: rotate(202deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(2) .peony-petal:nth-child(6) {
+        transform: rotate(247deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(2) .peony-petal:nth-child(7) {
+        transform: rotate(292deg) translate(20px, 0);
+      }
+      .peony-layer:nth-child(2) .peony-petal:nth-child(8) {
+        transform: rotate(337deg) translate(20px, 0);
+      }
+
+      /* Center of peony */
+      .peony-center {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        background: radial-gradient(circle, #ff1493, #c71585);
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+      }
+
+      /* Stems */
+      .stem {
+        position: absolute;
+        width: 3px;
+        background: linear-gradient(to bottom, #6b8e23, #556b2f);
+        bottom: -200px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: -1;
+      }
+
+      /* Leaves on stems */
+      .leaf {
+        position: absolute;
+        width: 30px;
+        height: 15px;
+        background: linear-gradient(to right, #7cb342, #558b2f);
+        border-radius: 0 100% 0 100%;
+        transform-origin: left center;
+      }
+
+      .leaf:nth-child(1) {
+        bottom: 120px;
+        left: -5px;
+        transform: rotate(-30deg);
+      }
+
+      .leaf:nth-child(2) {
+        bottom: 80px;
+        left: 3px;
+        transform: rotate(20deg) scaleX(-1);
+      }
+
+      /* Position flowers - creating a natural bouquet arrangement */
+      .lily:nth-child(1) {
+        top: 40px;
+        left: 180px;
+        z-index: 6;
+      }
+      .lily:nth-child(1) .stem { height: 240px; }
+
+      .lily:nth-child(2) {
+        top: 20px;
+        left: 90px;
+        z-index: 5;
+        transform: rotate(-10deg);
+      }
+      .lily:nth-child(2) .stem { height: 250px; }
+
+      .lily:nth-child(3) {
+        top: 60px;
+        left: 260px;
+        z-index: 4;
+        transform: rotate(15deg);
+      }
+      .lily:nth-child(3) .stem { height: 230px; }
+
+      .peony:nth-child(4) {
+        top: 80px;
+        left: 30px;
+        z-index: 7;
+        transform: rotate(-5deg);
+      }
+      .peony:nth-child(4) .stem { height: 220px; }
+
+      .peony:nth-child(5) {
+        top: 100px;
+        left: 220px;
+        z-index: 8;
+        transform: rotate(8deg);
+      }
+      .peony:nth-child(5) .stem { height: 210px; }
+
+      /* Bouquet wrap */
+      .wrap {
+        position: absolute;
+        bottom: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 140px;
+        height: 120px;
+        background: linear-gradient(to bottom, rgba(139, 111, 71, 0.3), #8b6f47);
+        clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+        z-index: 3;
+      }
+
+      .ribbon {
+        position: absolute;
+        bottom: 120px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 35px;
+        background: #d4a373;
+        z-index: 4;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      }
+
+      .ribbon::before,
+      .ribbon::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+      }
+
+      .ribbon::before {
+        left: -25px;
+        border-width: 17.5px 25px 17.5px 0;
+        border-color: transparent #d4a373 transparent transparent;
+      }
+
+      .ribbon::after {
+        right: -25px;
+        border-width: 17.5px 0 17.5px 25px;
+        border-color: transparent transparent transparent #d4a373;
+      }
+
+      .ribbon-knot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        background: #b8936f;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+
+
+      /* Final message */
+      .final-message {
+        max-width: 700px;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .final-message.visible {
+        animation: fadeInUp 2s ease forwards;
+      }
+
+      .final-message h2 {
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(2rem, 4vw, 3rem);
+        color: var(--deep-rose);
+        margin-bottom: 30px;
+      }
+
+      .final-message p {
+        font-size: clamp(1.1rem, 2vw, 1.4rem);
+        line-height: 2;
+        color: var(--text-dark);
+      }
+
+      /* Animations */
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Music control */
+      .music-control {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: var(--deep-rose);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+        transition: transform 0.3s ease;
+      }
+
+      .music-control:hover {
+        transform: scale(1.1);
+      }
+
+      .music-control::after {
+        content: "🎵";
+        font-size: 1.5rem;
+      }
+
+      .music-control.paused::after {
+        content: "🔇";
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .container {
+          padding: 40px 15px;
+        }
+
+        .photo-card {
+          width: 90%;
+          max-width: 350px;
+        }
+
+        .photo-card:nth-child(odd),
+        .photo-card:nth-child(even) {
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .bouquet {
+          transform: scale(0.8);
+        }
+      }
+
+      /* Scroll fade-in effect */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.8s ease,
+          transform 0.8s ease;
+      }
+
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .timer-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(255, 182, 193, 0.12), rgba(173, 216, 230, 0.08));
+    border: 1px solid rgba(255, 182, 193, 0.25);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.countdown-display {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #0e471f;
+    letter-spacing: 2px;
+    margin: 1.2rem 0;
+    line-height: 1.3;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.countdown-display span.label {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #0e471f;
+    opacity: 0.9;
+    margin: 0 4px;
+}
+
+.timer-card small {
+    color: #0e471f;
+    opacity: 0.8;
+    font-style: italic;
+    margin-top: 1rem;
+}
+
+/* Gentle pulse animation for romance */
+@keyframes pulseSoft {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.03); }
+}
+
+.countdown-display {
+    animation: pulseSoft 8s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .countdown-display { font-size: 2.2rem; }
+}
